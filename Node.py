@@ -7,7 +7,8 @@ class Node():
     """This is the class that will be the base of every node object
 
     Each node will read a config file in JSON format to initialize zmq sockets.
-    The sockets will be stored in a dict with the key being the topic and the value being the socket
+    The sockets will be stored in a dict with the key being the topic and the
+    value being the socket.
     To create a node, make a config file and extend the run() method.
     Further functionality is on the way.
     """
@@ -52,30 +53,30 @@ class Node():
         if "topics" not in self.configData:
             raise Exception("Topics or port not found in %s" % self.configPath)
 
-        for topic in self.configData['topics']:
-            for x, y in topic.items():
-                if y == "pub" or y == "rep":
-                    if y == "pub":
-                        socket = self.context.socket(zmq.PUB)
-                    else:
-                        socket = self.context.socket(zmq.REP)
-                    socket.bind(
-                        self.configData['protocol'] + "://*:%s" % self.configData['port'])
-                    self.topics[x] = socket
-                elif y == "sub" or y == "req":
-                    if y == "sub":
-                        socket = self.context.socket(zmq.SUB)
-                    else:
-                        socket = self.context.socket(zmq.REQ)
-                    print(self.configData['protocol'] +
-                          "://localhost:%s" % self.configData['port'])
-                    socket.connect(
-                        self.configData['protocol'] + "://localhost:%s" % self.configData['port'])
-                    if y == "sub":
-                        socket.setsockopt_string(zmq.SUBSCRIBE, x)
-                    self.topics[x] = socket
-                else:
-                    raise Exception("Topic %s should be either pub or sub" % x)
+        # for topic in self.configData['topics']:
+            # for x, y in topic.items():
+            #     if y == "pub" or y == "rep":
+            #         if y == "pub":
+            #             socket = self.context.socket(zmq.PUB)
+            #         else:
+            #             socket = self.context.socket(zmq.REP)
+            #         socket.bind(
+            #             self.configData['protocol']
+            # + "://*:%s" % self.configData['port'])
+            #         self.topics[x] = socket
+            #     elif y == "sub" or y == "req":
+            #         if y == "sub":
+            #             socket = self.context.socket(zmq.SUB)
+            #         else:
+            #             socket = self.context.socket(zmq.REQ)
+            #         print(self.configData['protocol'] +
+            #               "://localhost:%s" % self.configData['port'])
+            #         socket.connect(
+            #             self.configData['protocol']
+            # + "://localhost:%s" % self.configData['port'])
+            #         if y == "sub":
+            #             socket.setsockopt_string(zmq.SUBSCRIBE, x)
+            #         self.topics[x] = socket
 
     def gen_address(self, protocol, address, port):
         """ This method builds a url from info in a json file
