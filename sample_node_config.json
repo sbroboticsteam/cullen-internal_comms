@@ -2,22 +2,18 @@
     "id": "sample",
     "topics": [
         {
-            "arm": "pub",
+            "name": "arm-out",
+            "topic": "arm",
+            "paradigm": "pub",
             "protocol": "tcp",
-            "port": "5556",
-            "model": "pubsub"
+            "port": "5556"
         },
         {
-            "inputs": "sub",
+            "name": "inputs-out",
+            "topic": "inputs",
+            "paradigm": "sub",
             "protocol": "tcp",
-            "port": "5556",
-            "model": "pubsub"
-        },
-        {
-            "comms": "req",
-            "protocol": "tcp",
-            "port": "7777",
-            "model": "reqrep"
+            "port": "5556"
         }
     ]
 }

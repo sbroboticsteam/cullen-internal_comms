@@ -102,3 +102,14 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# vscode stuff
+.vscode/
+
+# test files
+ipc_test_pub.py
+ipc_test_sub.py
+tcp_test_pub.py
+tcp_test_sub.py
+udp_test_pub.py
+udp_test_sub.py
