@@ -12,7 +12,7 @@
         {
             "name": "inputs-out",
             "topic": "inputs",
-            "paradigm": "sub",
+            "paradigm": "pub",
             "protocol": "tcp",
             "address": "localhost",
             "port": "5556"
