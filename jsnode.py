@@ -26,8 +26,8 @@ while True:
     for i in range(0, 11):
         data.append(sdl2.SDL_JoystickGetButton(joy, i))
     data.append(sdl2.SDL_JoystickGetHat(joy, 0))
-    msg = json.dumps(data)
-    jsnode.send(msg)
+    msg = json.dumps(data).encode('utf-8')
+    jsnode.send("inputs-out",msg)
     time.sleep(0.01)
 
     # Data array format:
