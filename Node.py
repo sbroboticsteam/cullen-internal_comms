@@ -94,10 +94,10 @@ class Node():
             socket.setsockopt_string(zmq.SUBSCRIBE, topic)
         elif paradigm == "pub":
             socket = self.context.socket(zmq.PUB)
-            socket.connect(url)
+            socket.bind(url)
         elif paradigm == "req":
             socket = self.context.socket(zmq.REQ)
-            socket.bind(url)
+            socket.connect(url)
         elif paradigm == "rep":
             socket == self.context.socket(zmq.REP)
             socket.bind(url)

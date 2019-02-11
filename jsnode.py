@@ -4,7 +4,7 @@ from Node import Node
 import json
 import time
 
-jsnode = Node("sample_node_config.json")
+jsnode = Node("controls_node.json")
 
 sdl2.SDL_Init(sdl2.SDL_INIT_JOYSTICK)
 
