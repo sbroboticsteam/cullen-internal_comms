@@ -9,5 +9,5 @@ while True:
     data = json.loads('{}')
     data['id'] = input("id: ")
     data['angle'] = input("angle: ")
-    msg = json.dumps(data).encode('utf-8')
+    msg = json.dumps(data)
     node.send("arm-controls", msg)
