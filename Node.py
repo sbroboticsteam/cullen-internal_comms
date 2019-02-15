@@ -53,7 +53,7 @@ class Node():
         for topic in self.configData['topics']:
             addr = self.gen_address(topic['protocol'], topic['address'],
                                     topic['port'])
-            socket = self.build_socket(topic['paradigm'], topic['topic'], addr)
+            socket = self.build_socket(topic['paradigm'], topic['name'], addr)
             self.topics[topic['name']] = socket
 
     def gen_address(self, protocol, address, port):

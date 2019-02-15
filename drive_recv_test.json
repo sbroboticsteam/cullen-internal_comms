@@ -2,8 +2,7 @@
     "id": "drive-controls",
     "topics": [
         {
-            "name": "drive-controls",
-            "topic": "drive",
+            "name": "drive",
             "paradigm": "sub",
             "protocol": "tcp",
             "address": "127.0.0.1",

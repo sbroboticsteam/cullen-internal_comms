@@ -10,4 +10,4 @@ while True:
     data['id'] = input("id: ")
     data['angle'] = input("angle: ")
     msg = json.dumps(data)
-    node.send("arm-controls", msg)
+    node.send("arm", msg)

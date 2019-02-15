@@ -21,7 +21,7 @@ while True:
         data.append(sdl2.SDL_JoystickGetButton(joy, i))
     data.append(sdl2.SDL_JoystickGetHat(joy, 0))
     msg = json.dumps(data)
-    node.send("drive-controls",msg)
+    node.send("drive",msg)
 
     time.sleep(0.01)
 
