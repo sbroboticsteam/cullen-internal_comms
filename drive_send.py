@@ -5,7 +5,7 @@ from Node import Node
 import json
 import time
 
-node = Node("drive_controls.json")
+node = Node("drive_send.json")
 
 sdl2.SDL_Init(sdl2.SDL_INIT_JOYSTICK)
 

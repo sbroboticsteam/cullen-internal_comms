@@ -3,7 +3,7 @@ from Node import Node
 import json
 import time
 
-node = Node("arm_controls.json")
+node = Node("arm_send.json")
 
 while True:
     data = json.loads('{}')
