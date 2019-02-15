@@ -1,0 +1,13 @@
+{
+    "id": "drive-controls",
+    "topics": [
+        {
+            "name": "drive-controls",
+            "topic": "drive",
+            "paradigm": "pub",
+            "protocol": "tcp",
+            "address": "127.0.0.1",
+            "port": "5557"
+        }
+    ]
+}

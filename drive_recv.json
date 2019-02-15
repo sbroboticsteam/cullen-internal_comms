@@ -1,13 +1,13 @@
 {
-    "id": "test",
+    "id": "drive-controls",
     "topics": [
         {
-            "name": "inputs-out",
-            "topic": "inputs",
+            "name": "drive-controls",
+            "topic": "drive",
             "paradigm": "sub",
             "protocol": "tcp",
             "address": "127.0.0.1",
-            "port": "5556"
+            "port": "5557"
         }
     ]
 }

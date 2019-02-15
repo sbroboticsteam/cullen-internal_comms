@@ -1,25 +1,19 @@
+
 import sdl2
 import sdl2.ext
 from Node import Node
 import json
 import time
 
-jsnode = Node("controls_node.json")
+node = Node("drive_controls.json")
 
 sdl2.SDL_Init(sdl2.SDL_INIT_JOYSTICK)
-
-""" For when we want to use multiple joysticks
-self.joysticks = []
-for i in range(0, sdl2.SDL_NumJoySticks()):
-    joy = sdl2.SDL_JoystickOpen(i)
-    self.joysticks.append(joy)
-print("joystick initialized")
-"""
 
 joy = sdl2.SDL_JoystickOpen(0)
 
 while True:
     sdl2.SDL_PumpEvents()
+
     data = []
     for i in range(0, 6):
         data.append(sdl2.SDL_JoystickGetAxis(joy, i))
@@ -27,7 +21,8 @@ while True:
         data.append(sdl2.SDL_JoystickGetButton(joy, i))
     data.append(sdl2.SDL_JoystickGetHat(joy, 0))
     msg = json.dumps(data).encode('utf-8')
-    jsnode.send("inputs-out",msg)
+    node.send("drive-controls",msg)
+
     time.sleep(0.01)
 
     # Data array format:
@@ -53,6 +48,3 @@ while True:
     ## 4 bit
     # 17 | hat switch / dpad
     #    | (1 = N, 3 = NE, 2 = E, 6 = SE, 4 = S, 12 = SW, 8 = W, 9 = NW)
-
-def shutdown(self):
-    print("joystick shutting down")
