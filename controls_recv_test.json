@@ -1,6 +1,13 @@
 {
-    "id": "drive-controls",
+    "id": "controls",
     "topics": [
+        {
+            "name": "arm",
+            "paradigm": "sub",
+            "protocol": "tcp",
+            "address": "127.0.0.1",
+            "port": "5556"
+        },
         {
             "name": "drive",
             "paradigm": "sub",
