@@ -11,11 +11,6 @@ while True:
     node.send_nparray("inputs", data, copy=False)
     print("Message Sent: ")
     print(data)
-    #data_returned = node.recv_nparray("inputs")
-    #print("Message Received: ")
-    #print(data_returned)
-    time.sleep(1)
-
-def shutdown(self):
-    print("node shutting down")
-
+    data = node.recv_nparray("inputs")
+    print("Message Received: ")
+    print(data)
