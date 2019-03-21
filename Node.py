@@ -99,7 +99,7 @@ class Node():
             socket = self.context.socket(zmq.REQ)
             socket.connect(url)
         elif paradigm == "rep":
-            socket == self.context.socket(zmq.REP)
+            socket = self.context.socket(zmq.REP)
             socket.bind(url)
         else:
             raise Exception("Please provide a valid paradigm")
