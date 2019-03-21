@@ -1,11 +1,13 @@
 import json
 import zmq
 import traceback
+import numpy
+import functools
+import uuid
 
 
 class Node():
     """This is the class that will be the base of every node object
-
     Each node will read a config file in JSON format to initialize zmq sockets.
     The sockets will be stored in a dict with the key being the topic and the
     value being the socket.
@@ -25,15 +27,12 @@ class Node():
 
     def stopzmq(self):
         """ Shuts down all zmq stuff
-
-
         """
 
         self.context.destroy()
 
     def loop(self):
         """ The main node code that gets executed every loop
-
         This is the method that should be overridden for the node to do stuff
         So help me God if anyone overrides this and puts a while true in there
         """
@@ -43,7 +42,6 @@ class Node():
     # TODO: use new helper methods
     def initzmq(self):
         """This method initializes zmq sockets and places them in the topics dict
-
         It will throw exceptions if the JSON it was fed is not correct
         """
 
@@ -53,12 +51,11 @@ class Node():
         for topic in self.configData['topics']:
             addr = self.gen_address(topic['protocol'], topic['address'],
                                     topic['port'])
-            socket = self.build_socket(topic['paradigm'], topic['topic'], addr)
+            socket = self.build_socket(topic['paradigm'], topic['name'], addr)
             self.topics[topic['name']] = socket
 
     def gen_address(self, protocol, address, port):
         """ This method builds a url from info in a json file
-
         It can create a url for ipc, udp and tcp.
         It will throw exceptions if the protocol is invalid
         """
@@ -83,8 +80,6 @@ class Node():
 
     def build_socket(self, paradigm, topic, url):
         """ This method creates a socket from a paradigm and a url
-
-
         """
 
         socket = None
@@ -108,7 +103,6 @@ class Node():
 
     def send(self, topic, msg):
         """This method can be used to send messages for the pub pattern
-
         The first argument is the topic to send the message on and the second
         is the message body
         """
@@ -125,7 +119,6 @@ class Node():
     # TODO: implement a timeout
     def recv(self, topic, callback):
         """This method is used to receive messages for the sub pattern
-
         The first argument is the topic to look for messages on.
         The second argument is a function to be executed with the message
         received being passed to it as an argument
@@ -137,7 +130,6 @@ class Node():
 
     def request(self, topic, req, callback):
         """This method is used to send a request to a node
-
         The first argument is the topic(in this case, the node) to send a
         request to.
         The second argument is the request to send
@@ -152,7 +144,6 @@ class Node():
 
     def reply(self, topic, callback):
         """This method is used to send a reply to a node
-
         The first argument is the topic(in this case, the node) to reply to
         The second argument is a callback that will handle the request sent to
         this node. It must return a string.
@@ -165,3 +156,23 @@ class Node():
         msg = self.topics[topic].recv()
         rep = callback(msg)
         self.topics[topic].send(rep)
+
+    def send_nparray(self, topic, nparray, flags=0, copy=True, track=False):
+        """send a numpy array with metadata"""
+        socket = self.topics[topic]
+        md = dict(
+            dtype = str(nparray.dtype),
+            shape = nparray.shape,
+        )
+        socket.send_json(md, flags|zmq.SNDMORE)
+        return socket.send(nparray, flags, copy=copy, track=track)
+
+    
+    def recv_nparray(self, topic, flags=0, copy=True, track=False):
+        """recv a numpy array"""
+        socket = self.topics[topic]
+        md = socket.recv_json(flags=flags)
+        msg = socket.recv(flags=flags, copy=copy, track=track)
+        buf = buffer(msg)
+        nparray = numpy.frombuffer(buf, dtype=md['dtype'])
+        return nparray.reshape(md['shape'])
