@@ -3,7 +3,7 @@
     "topics": [
         {
             "name": "inputs",
-            "paradigm": "req",
+            "paradigm": "rep",
             "protocol": "tcp",
             "address": "127.0.0.1",
             "port": "5556"
